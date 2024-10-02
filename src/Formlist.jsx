@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import "./Formlist.css";
+import DataOut from "./DataOut";
 const Formlist = () => {
   const [name, setName] = useState("");
   const [dept, setDept] = useState("");
   const [rating, setRating] = useState("");
   const [Submit, setSubmit] = useState([]);
+  const [Click, setClick] = useState(true);
 
-  // const InputName = (name) => {
-  //   setName(name.target.value);
-  // };
-  // const InputDept = (dept) => {
-  //   setDept(dept.target.value);
-  // };
-  // const InputRating = (rating) => {
-  //   setRating(rating.target.value);
-  // };
+  
   const HandleChange = (event) => {
     const {name,value,dept} = event.target
     if (name === "name") {
@@ -35,9 +29,14 @@ const Formlist = () => {
     setName("");
     setDept("");
     setRating("");
+    setClick(false);
+  };
+  const ClickChange = () =>{
+    setClick(!Click);
   };
   return (
     <>
+    {Click ? 
       <div className="input-section">
         <div className="child-input">
           <h1>EMPLOYEE FEEDBACK FORM</h1>
@@ -76,15 +75,11 @@ const Formlist = () => {
           Submit
         </button>
       </div>
-      <div className="output">
-        <div className="list">
-          {Submit.map((info, index) => (
-            <div className="lists" key={index}>
-              Name: {info.name} || Department: {info.dept} || rating: {info.rating}
-            </div>
-          ))}
-        </div>
+      :
+      <div>
+        <DataOut ClickChange = {ClickChange} Submit = {Submit} />
       </div>
+}
     </>
   );
 };
